@@ -30,6 +30,14 @@ client.connect((err) => {
 				res.send(documents);
 			});
 	});
+	// Update
+	app.get('/product/:id', (req, res) => {
+		collection
+			.find({ _id: objectId(req.params.id) })
+			.toArray((err, documents) => {
+				res.send(documents[0]);
+			});
+	});
 	// Data post From Frontend Submit Form
 	app.post('/addProduct', (req, res) => {
 		const product = req.body;
@@ -37,6 +45,23 @@ client.connect((err) => {
 			console.log('Data added Successfully');
 			res.send('Success');
 		});
+	});
+	// Update / Edit
+	app.patch('/update/:id', (req, res) => {
+		collection
+			.updateOne(
+				{ _id: objectId(req.params.id) },
+				{
+					$set: {
+						name: req.body.name,
+						price: req.body.price,
+						quantity: req.body.quantity,
+					},
+				}
+			)
+			.then((result) => {
+				console.log(result);
+			});
 	});
 	// Delete
 	app.delete('/delete/:id', (req, res) => {
