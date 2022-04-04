@@ -18,7 +18,13 @@ const client = new MongoClient(uri, {
 });
 client.connect((err) => {
 	const collection = client.db('organicProduct').collection('Products');
-	// perform actions on the collection object
+	// Make API From Database
+	app.get('/products', (req, res) => {
+		collection.find({}).toArray((err, documents) => {
+			res.send(documents);
+		});
+	});
+	// Data post From Frontend Submit Form
 	app.post('/addProduct', (req, res) => {
 		const product = req.body;
 		collection.insertOne(product).then((result) => {
