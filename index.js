@@ -43,7 +43,8 @@ client.connect((err) => {
 		const product = req.body;
 		collection.insertOne(product).then((result) => {
 			console.log('Data added Successfully');
-			res.send('Success');
+			// res.send('Success');
+			res.redirect('/');
 		});
 	});
 	// Update / Edit
@@ -66,7 +67,7 @@ client.connect((err) => {
 	// Delete
 	app.delete('/delete/:id', (req, res) => {
 		collection.deleteOne({ _id: objectId(req.params.id) }).then((result) => {
-			console.log(result);
+			res.send(result.deletedCount > 0);
 		});
 	});
 });

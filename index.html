@@ -28,7 +28,7 @@
            const container = document.getElementById('products');
            products.forEach(product => {
             const item = document.createElement('p');
-           item.innerHTML = `<strong>Name: </strong> ${product.name} <strong> Price: </strong> ${product.price} <strong> Quantity: </strong> ${product.quantity} <button onclick="loadProduct('${product._id}')">Edit</button> <button onclick="deleteProduct('${product._id}')">Delete</button>`;
+           item.innerHTML = `<strong>Name: </strong> ${product.name} <strong> Price: </strong> ${product.price} <strong> Quantity: </strong> ${product.quantity} <button onclick="loadProduct('${product._id}')">Edit</button> <button onclick="deleteProduct( event,'${product._id}')">Delete</button>`;
             container.appendChild(item);
 
            })
@@ -43,7 +43,7 @@
             .then(data => {
               const update = document.getElementById('update');
               update.innerHTML = `
-              <h3> Update: ${data._id}</h3>
+              
               <strong>Name: </strong>  <input type="text" value="${data.name}" id="name">
               <strong> Price: </strong> <input type="text" value="${data.price}" id="price">
               <strong> Quantity: </strong> <input type="text" value="${data.quantity}" id="quantity">
@@ -71,14 +71,17 @@
 
 
         }
-        function deleteProduct(id) {
+        function deleteProduct(event, id) {
+           
             fetch(`/delete/${id}`,
             {
                 method: 'DELETE'
             })
             .then(res => res.json())
             .then(result => {
-                console.log("Deleted Successfully");
+                if(result ){
+                    event.target.parentNode.style.display = 'none';
+                }
             })
             
             
