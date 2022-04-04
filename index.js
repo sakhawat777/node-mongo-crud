@@ -20,9 +20,13 @@ client.connect((err) => {
 	const collection = client.db('organicProduct').collection('Products');
 	// Make API From Database
 	app.get('/products', (req, res) => {
-		collection.find({}).toArray((err, documents) => {
-			res.send(documents);
-		});
+		collection
+			.find({})
+			// limit 4 products
+			// .limit(4)
+			.toArray((err, documents) => {
+				res.send(documents);
+			});
 	});
 	// Data post From Frontend Submit Form
 	app.post('/addProduct', (req, res) => {
