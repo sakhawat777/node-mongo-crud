@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+// import objectId from mongodb
+const objectId = require('mongodb').ObjectId;
 const app = express();
 app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
@@ -34,6 +36,12 @@ client.connect((err) => {
 		collection.insertOne(product).then((result) => {
 			console.log('Data added Successfully');
 			res.send('Success');
+		});
+	});
+	// Delete
+	app.delete('/delete/:id', (req, res) => {
+		collection.deleteOne({ _id: objectId(req.params.id) }).then((result) => {
+			console.log(result);
 		});
 	});
 });
