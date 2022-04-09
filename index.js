@@ -44,6 +44,7 @@ client.connect((err) => {
 		collection.insertOne(product).then((result) => {
 			console.log('Data added Successfully');
 			// res.send('Success');
+			// reload
 			res.redirect('/');
 		});
 	});
@@ -61,7 +62,7 @@ client.connect((err) => {
 				}
 			)
 			.then((result) => {
-				console.log(result);
+				res.send(result.matchedCount > 0);
 			});
 	});
 	// Delete

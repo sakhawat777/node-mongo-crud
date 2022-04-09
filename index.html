@@ -26,6 +26,7 @@
         .then(res => res.json())
         .then(products => {
            const container = document.getElementById('products');
+           container.innerHTML = '';
            products.forEach(product => {
             const item = document.createElement('p');
            item.innerHTML = `<strong>Name: </strong> ${product.name} <strong> Price: </strong> ${product.price} <strong> Quantity: </strong> ${product.quantity} <button onclick="loadProduct('${product._id}')">Edit</button> <button onclick="deleteProduct( event,'${product._id}')">Delete</button>`;
@@ -65,8 +66,12 @@
                 body: JSON.stringify(product)
             })
             .then(res => res.json())
-            .then(data => {
-                console.log('updated Product')
+            .then(result => {
+                if(result){
+                   loadAllProducts();
+                   const update = document.getElementById('update');
+                    update.innerHTML = '';
+                }
             })
 
 
